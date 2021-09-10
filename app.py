@@ -3,26 +3,26 @@ from pusher import Pusher
 import jinja2
 
 
-application = app = Flask(__name__)
+application = Flask(__name__)
 
 my_loader = jinja2.ChoiceLoader([
-    app.jinja_loader,
+    application.jinja_loader,
     jinja2.FileSystemLoader('/Users/yehhsuan-yu/something/stockinvest-dashboard'),
 ])
-app.jinja_loader = my_loader
+application.jinja_loader = my_loader
 pusher = Pusher(app_id='756786', key='f3b051950a33ecdfb88f', secret='1c8ed0c8ad2f5eec224f', cluster='us2', ssl=True)
 
 
-@app.route('/')
+@application.route('/')
 def index():
 	return render_template('index.html')
 
-@app.route('/dashboard')
+@application.route('/dashboard')
 def dashboard():
 	return render_template('dashboard.html')
 
 
-@app.route('/record', methods=['POST'])
+@application.route('/record', methods=['POST'])
 def record():
 	data = request.form
 	pusher.trigger(u'record', u'add', {
@@ -37,4 +37,4 @@ def record():
 
 if __name__ == '__main__':
 
-    app.run(debug=True)
+    application.run(debug=True)
