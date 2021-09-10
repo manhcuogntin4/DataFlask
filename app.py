@@ -3,7 +3,7 @@ from pusher import Pusher
 import jinja2
 
 
-app = Flask(__name__)
+application = app = Flask(__name__)
 
 my_loader = jinja2.ChoiceLoader([
     app.jinja_loader,
